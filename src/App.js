@@ -2,20 +2,26 @@ import "./styles/main.scss"
 import Chat from "./components/Organisms/Chat"
 import LiveInfo from "./components/Organisms/LiveInfo"
 import Player from "./components/Organisms/Player"
-import store from "./redux/store"
-import { Provider } from "react-redux"
-import { getAllData } from "./redux/actionCreators"
-
-// Cargar toda la info
-store.dispatch(getAllData())
+import { useEffect, useState } from "react"
+// import "./services/realtime"
 
 function App() {
-  return (
-    <Provider store={store}>
+  const [online, setOnline] = useState(undefined)
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API}/online`)
+      .then(() => setOnline(true))
+      .catch(err => console.error(err))
+  }, [])
+
+  return online ? (
+    <>
       <Player />
       <LiveInfo />
       <Chat />
-    </Provider>
+    </>
+  ) : (
+    <h1>No estamos online</h1>
   )
 }
 

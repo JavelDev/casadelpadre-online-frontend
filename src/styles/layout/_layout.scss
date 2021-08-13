@@ -3,7 +3,7 @@
   grid-template-rows: calc(100vw * 0.5625) auto 1fr;
   width: 100vw;
   height: 100vh;
-  @media (orientation: landscape) {
+  @media (orientation: landscape) AND (min-width: 500px) {
     grid-template-rows: auto 1fr;
     grid-template-columns: 1fr minmax(300px, 25%);
   }

@@ -1,0 +1,52 @@
+.live-banner {
+  display: flex;
+  font-size: var(--fs-metadata);
+  background: var(--red-color);
+  border-radius: $radius / 2;
+  &__text {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: $padding;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 1em;
+    &::before {
+      content: "";
+      display: block;
+      width: 0.5em;
+      height: 0.5em;
+      background: var(--content-color);
+      border-radius: 50%;
+    }
+  }
+  &__counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--red-dark-color);
+    padding: $padding;
+    border-radius: $radius / 2;
+    gap: 0.3em;
+    &:before {
+      content: "\e8f4";
+      font-size: 1em;
+      font-family: var(--ff-icons);
+    }
+  }
+}
+
+.quality-selector {
+  display: flex;
+  background: var(--message-color);
+  border-radius: $radius / 2;
+  button,
+  .button {
+    background: transparent;
+    color: var(--metadata-color);
+    &.active {
+      color: var(--content-color);
+      background: var(--own-message-color);
+    }
+  }
+}

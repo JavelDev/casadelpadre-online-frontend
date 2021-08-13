@@ -1,0 +1,51 @@
+$padding: 10px;
+$margin: $padding * 1.5;
+$radius: 20px;
+
+$bg-color: #292f3f;
+$container-color: #242732;
+$content-color: #fff;
+$metadata-color: #636a79;
+$message-color: #373e4e;
+$own-message-color: #272a35;
+$primary-color: #837dff;
+$secondary-color: #00ac83;
+$writer-color: rgba(#000, 0.5);
+$red-color: #842323;
+$red-dark-color: #551717;
+
+:root {
+  --zi-bg: 0;
+  --zi-content: 1;
+  --zi-tooltip: 100;
+  --zi-header: 10;
+  --zi-modal: 100;
+
+  --ff-content: "Roboto", sans-serif;
+  --ff-title: "Roboto", sans-serif;
+  --ff-icons: "Material Icons";
+
+  --bg-color: #{$bg-color};
+  --container-color: #{$container-color};
+  --content-color: #{$content-color};
+  --metadata-color: #{$metadata-color};
+  --message-color: #{$message-color};
+  --own-message-color: #{$own-message-color};
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --writer-color: #{$writer-color};
+  --red-color: #{$red-color};
+  --red-dark-color: #{$red-dark-color};
+
+  --fs-content: 0.81rem; // 12px
+  --fs-special: 1rem; // 16
+  --fs-title: 1.87rem; // 30px
+  --fs-supertitle: 2.18rem; // 35px
+  --fs-subtitle: 1.56rem; // 25px
+  --fs-metadata: 0.87rem; // 14px
+  --fs-mini: 0.68rem; // 11px
+
+  font-family: var(--ff-content);
+  color: var(--content-color);
+  font-size: var(--fs-content);
+}

@@ -29,6 +29,7 @@ button {
   color: var(--content-color);
   font-size: var(--fs-metadata);
   line-height: 1em;
+  cursor: pointer;
   &.secondary {
     background: var(--secondary-color);
   }

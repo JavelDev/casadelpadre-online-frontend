@@ -25,7 +25,7 @@
     justify-content: center;
     align-items: center;
     background: var(--red-dark-color);
-    padding: $padding;
+    padding: $padding $padding / 2;
     border-radius: $radius / 2;
     gap: 0.3em;
     &:before {
@@ -44,6 +44,7 @@
   .button {
     background: transparent;
     color: var(--metadata-color);
+    padding: $padding $padding / 2;
     &.active {
       color: var(--content-color);
       background: var(--own-message-color);

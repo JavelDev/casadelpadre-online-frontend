@@ -1,8 +1,10 @@
-const Message = ({ username, message, sended_at, time_point }) => {
+import { userID } from "../../helpers/helpers"
+import { getTimeAgo } from "../../hooks/useTimeAgo"
+const Message = ({ username, message, sended_at, userID: id, show_timestamp }) => {
   return (
     <>
-      {time_point && <time className="chat-hour">{sended_at}</time>}
-      <div className="chat-message">
+      {show_timestamp && <time className="chat-hour">{getTimeAgo(sended_at)}</time>}
+      <div className={`chat-message ${id === userID ? "own" : ""}`}>
         <span className="chat-message__username">{username}</span>
         <span className="chat-message__content">{message}</span>
       </div>

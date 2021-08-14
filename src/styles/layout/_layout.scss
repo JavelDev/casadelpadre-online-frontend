@@ -99,9 +99,7 @@
       margin-left: auto;
       background: var(--own-message-color);
       border-radius: $radius 0 $radius $radius;
-      .chat-message__username {
-        display: none;
-      }
+      text-align: right;
     }
   }
 }

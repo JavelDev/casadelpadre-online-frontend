@@ -2,6 +2,8 @@ import Icon from "../Molecules/Icon"
 import Message from "./Message"
 import { useEffect, useRef, useState } from "react"
 import Socket from "../../services/socket"
+import { userID } from "../../helpers/helpers"
+import { verifyDiff } from "../../hooks/useTimeAgo"
 
 const ENTER_KEY = 13
 
@@ -38,6 +40,8 @@ const Chat = () => {
       username,
       message: writer.current.message.value,
       sended_at: Date.now(),
+      userID,
+      show_timestamp: verifyDiff(Date.now()),
     })
     writer.current.reset()
   }

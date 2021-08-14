@@ -28,8 +28,10 @@ button {
   background: var(--primary-color);
   color: var(--content-color);
   font-size: var(--fs-metadata);
+  font-weight: bold;
   line-height: 1em;
   cursor: pointer;
+  margin: $margin auto;
   &.secondary {
     background: var(--secondary-color);
   }
@@ -40,9 +42,40 @@ textarea {
   border: 0;
   resize: none;
   font-family: var(--ff-content);
+  background: var(--container-color);
+  display: block;
+  padding: $padding $radius;
+  width: 100%;
+  border-radius: $radius;
+  &.main {
+    font-size: var(--fs-subtitle);
+    text-align: center;
+    font-weight: bold;
+  }
 }
 
 .material-icons {
   font-size: 1.3em;
   line-height: 1em;
+}
+
+h1,
+.h1,
+.title,
+h2,
+.h2,
+.subtitle {
+  font-size: var(--fs-title);
+  text-align: center;
+  line-height: 1.3em;
+  margin-bottom: $margin;
+}
+h2,
+.h2,
+.subtitle {
+  font-size: var(--fs-subtitle);
+}
+
+:focus::placeholder {
+  color: transparent;
 }

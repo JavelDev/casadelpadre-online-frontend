@@ -45,9 +45,34 @@
     background: transparent;
     color: var(--metadata-color);
     padding: $padding $padding / 2;
+    margin: 0;
     &.active {
       color: var(--content-color);
       background: var(--own-message-color);
     }
+  }
+}
+
+.identify-editor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: $padding * 2;
+  height: 100%;
+  position: relative;
+  z-index: var(--zi-modal);
+  background: var(--bg-color);
+}
+.message {
+  display: block;
+  text-align: center;
+  padding: $padding;
+  font-size: var(--fs-special);
+  font-weight: bold;
+  &.failed {
+    color: red;
+  }
+  &:empty {
+    display: none;
   }
 }

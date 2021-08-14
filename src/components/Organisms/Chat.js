@@ -3,7 +3,7 @@ import Message from "./Message"
 import { useEffect, useRef, useState } from "react"
 import Socket from "../../services/socket"
 import { userID } from "../../helpers/helpers"
-import { verifyDiff } from "../../hooks/useTimeAgo"
+import { getDateDiffs, verifyDiff } from "../../hooks/useTimeAgo"
 
 const ENTER_KEY = 13
 
@@ -19,7 +19,7 @@ const Chat = () => {
   useEffect(() => {
     fetch(process.env.REACT_APP_API)
       .then(res => res.json())
-      .then(({ chat }) => setMessages(chat))
+      .then(({ chat }) => setMessages(chat.filter(m => !m.identify)))
       .catch(err => console.error(err))
   }, [])
 
@@ -57,7 +57,29 @@ const Chat = () => {
     if (e.which === ENTER_KEY && e.ctrlKey) send()
   }
 
-  // * Configurar username
+  // * Identificarse
+
+  // Enviar notificación
+  const sendIdentify = () => {
+    if (!localStorage.getItem("identified")) return true
+    let { unit } = getDateDiffs(Date.now(), localStorage.getItem("identified"))
+    if (["second", "minute", "hour"].includes(unit)) return false
+    return true
+  }
+  const identify = () => {
+    if (!username || !sendIdentify()) return false
+    Socket.send("chat-message", {
+      username,
+      message: `${username} está viendo.`,
+      sended_at: Date.now(),
+      userID,
+      identify: true,
+    })
+    localStorage.setItem("identified", Date.now())
+  }
+  identify()
+
+  // obtener username
   const handleSettings = e => {
     e.preventDefault()
     setEditor(true)
@@ -70,6 +92,7 @@ const Chat = () => {
     setUsername(usrname)
     setEditor(false)
     localStorage.setItem("username", usrname)
+    identify()
   }
 
   return editor ? (

@@ -7,11 +7,11 @@ const DATE_UNITS = [
 
 let Last_time = 0
 
-const getDateDiffs = (timestamp, previous) => {
+export const getDateDiffs = (timestamp, previous) => {
   const elapsed = (timestamp - previous) / 1000
   for (const [unit, secondsUnit] of DATE_UNITS) {
     if (Math.abs(elapsed) > secondsUnit || unit === "second") {
-      const value = Math.floor(elapsed / secondsUnit)
+      const value = Math.round(elapsed / secondsUnit)
       return { value, unit }
     }
   }
@@ -29,5 +29,3 @@ export const getTimeAgo = timestamp => {
     rtf = new Intl.RelativeTimeFormat("es", { style: "short" })
   return rtf.format(value, unit)
 }
-
-// 600 950 2020

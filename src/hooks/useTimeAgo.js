@@ -17,15 +17,15 @@ export const getDateDiffs = (timestamp, previous) => {
   }
 }
 
-export const verifyDiff = timestamp => {
+export const verifyDiff = (timestamp) => {
   const { value, unit } = getDateDiffs(timestamp, Last_time)
   if (unit === "second" || (unit === "minute" && value <= 2)) return false
   Last_time = timestamp
   return true
 }
 
-export const getTimeAgo = timestamp => {
-  const { value, unit } = getDateDiffs(timestamp, Date.now()),
-    rtf = new Intl.RelativeTimeFormat("es", { style: "short" })
+export const getTimeAgo = (timestamp) => {
+  const { value, unit } = getDateDiffs(timestamp, Date.now())
+  const rtf = new Intl.RelativeTimeFormat("es", { style: "short" })
   return rtf.format(value, unit)
 }

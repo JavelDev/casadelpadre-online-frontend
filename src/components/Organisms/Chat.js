@@ -8,19 +8,19 @@ import { getDateDiffs, verifyDiff } from "../../hooks/useTimeAgo"
 const ENTER_KEY = 13
 
 const Chat = () => {
-  const [messages, setMessages] = useState([]),
-    [username, setUsername] = useState(localStorage.getItem("username")),
-    [editor, setEditor] = useState(!username),
-    [error, setError] = useState(""),
-    writer = useRef(),
-    container = useRef()
+  const [messages, setMessages] = useState([])
+  const [username, setUsername] = useState(localStorage.getItem("username"))
+  const [editor, setEditor] = useState(!username)
+  const [error, setError] = useState("")
+  const writer = useRef()
+  const container = useRef()
 
   // Cargar los mensajes (en caché)
   useEffect(() => {
     fetch(process.env.REACT_APP_API)
-      .then(res => res.json())
-      .then(({ chat }) => setMessages(chat.filter(m => !m.identify)))
-      .catch(err => console.error(err))
+      .then((res) => res.json())
+      .then(({ chat }) => setMessages(chat.filter((m) => !m.identify)))
+      .catch((err) => console.error(err))
   }, [])
 
   // Scrolear al final
@@ -30,7 +30,7 @@ const Chat = () => {
   }, [messages, container])
 
   // Recibir un mensaje
-  Socket.on("chat-message", message => setMessages([...messages, message]))
+  Socket.on("chat-message", (message) => setMessages([...messages, message]))
 
   // *  Enviar el mensaje
   const send = () => {
@@ -47,13 +47,13 @@ const Chat = () => {
   }
 
   // Enviar el formulario
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault()
     send()
   }
 
   // Manejar tecla ENTER
-  const handleKeyup = e => {
+  const handleKeyup = (e) => {
     if (e.which === ENTER_KEY && e.ctrlKey) send()
   }
 
@@ -62,7 +62,10 @@ const Chat = () => {
   // Enviar notificación
   const sendIdentify = () => {
     if (!localStorage.getItem("identified")) return true
-    let { unit } = getDateDiffs(Date.now(), localStorage.getItem("identified"))
+    const { unit } = getDateDiffs(
+      Date.now(),
+      localStorage.getItem("identified")
+    )
     if (["second", "minute", "hour"].includes(unit)) return false
     return true
   }
@@ -80,15 +83,17 @@ const Chat = () => {
   identify()
 
   // obtener username
-  const handleSettings = e => {
+  const handleSettings = (e) => {
     e.preventDefault()
     setEditor(true)
   }
-  const handleIdentify = e => {
+  const handleIdentify = (e) => {
     e.preventDefault()
-    let usrname = e.target.username.value
-    if (usrname.length <= 4) return setError("El nombre debe tener al menos 4 letras")
-    if (["anonimo", "anónimo", "anonimous"].includes(usrname.toLowerCase())) return setError("Ingrese su nombre real")
+    const usrname = e.target.username.value
+    if (usrname.length <= 4)
+      return setError("El nombre debe tener al menos 4 letras")
+    if (["anonimo", "anónimo", "anonimous"].includes(usrname.toLowerCase()))
+      return setError("Ingrese su nombre real")
     setUsername(usrname)
     setEditor(false)
     localStorage.setItem("username", usrname)
@@ -99,7 +104,14 @@ const Chat = () => {
     <form className="identify-editor" onSubmit={handleIdentify}>
       <h1 className="subtitle">Indicanos tu nombre para usar el Chat</h1>
       <p className="message failed">{error}</p>
-      <input type="text" id="username" placeholder="Escriba su nombre aquí" className="main" defaultValue={username} autoFocus />
+      <input
+        type="text"
+        id="username"
+        placeholder="Escriba su nombre aquí"
+        className="main"
+        defaultValue={username}
+        autoFocus
+      />
       <button>
         <Icon>person</Icon>
         <span>Identificarme</span>
@@ -113,7 +125,11 @@ const Chat = () => {
         ))}
       </div>
       <form className="chat-writer" onSubmit={onSubmit} ref={writer}>
-        <textarea className="chat-writer-input" id="message" onKeyUp={handleKeyup}></textarea>
+        <textarea
+          className="chat-writer-input"
+          id="message"
+          onKeyUp={handleKeyup}
+        ></textarea>
         <button className="only-icon basic" onClick={handleSettings}>
           <Icon>settings</Icon>
         </button>

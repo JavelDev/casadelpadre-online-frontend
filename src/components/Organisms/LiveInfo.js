@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Socket from "../../services/socket"
 const useViewers = () => {
-  let [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0)
   Socket.on("viewers-refresh", ({ viewers }) => setTotal(viewers))
   return total
 }

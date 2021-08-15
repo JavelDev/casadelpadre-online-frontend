@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API}/online`)
       .then(() => setOnline(true))
-      .catch(err => console.error(err))
+      .catch((err) => console.error(err))
   }, [])
 
   return online ? (

@@ -3,10 +3,10 @@ import ReactPlayer from "react-player/file"
 import Icon from "../Molecules/Icon"
 import Loader from "../Molecules/Loader"
 const Player = () => {
-  const [loading, setLoading] = useState(true),
-    [muted, setMuted] = useState(true),
-    [url, setUrl] = useState("http://192.168.1.135:8080/video/video.m3u8"),
-    [playing, setPlaying] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const [muted, setMuted] = useState(true)
+  const [url, setUrl] = useState("http://192.168.1.135:8080/video/video.m3u8")
+  const [playing, setPlaying] = useState(true)
   const onBuffer = () => {
     setLoading(true)
   }
@@ -35,10 +35,16 @@ const Player = () => {
       />
       <div className="player-controls">
         {loading && <Loader />}
-        {!loading && <div className={`playing-control ${playing ? "is-playing" : ""}`} onClick={togglePlay}></div>}
+        {!loading && (
+          <div
+            className={`playing-control ${playing ? "is-playing" : ""}`}
+            onClick={togglePlay}
+          ></div>
+        )}
         {muted && !loading && (
           <button className="unmute" onClick={() => setMuted(false)}>
-            <Icon>volume_off</Icon> <span>Click aquí para activar el sonido</span>
+            <Icon>volume_off</Icon>{" "}
+            <span>Click aquí para activar el sonido</span>
           </button>
         )}
       </div>

@@ -34,8 +34,8 @@ const Chat = () => {
 
   // *  Enviar el mensaje
   const send = () => {
-    console.log("Username", username)
     if (!username) return setEditor(true)
+    if (writer.current.message.value.trim() === "") return false
     Socket.send("chat-message", {
       username,
       message: writer.current.message.value,
@@ -114,7 +114,7 @@ const Chat = () => {
       </div>
       <form className="chat-writer" onSubmit={onSubmit} ref={writer}>
         <textarea className="chat-writer-input" id="message" onKeyUp={handleKeyup}></textarea>
-        <button className="only-icon secondary" onClick={handleSettings}>
+        <button className="only-icon basic" onClick={handleSettings}>
           <Icon>settings</Icon>
         </button>
         <button className="only-icon send">

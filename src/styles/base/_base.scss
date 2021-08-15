@@ -35,6 +35,9 @@ button {
   &.secondary {
     background: var(--secondary-color);
   }
+  &.basic {
+    background: var(--container-color);
+  }
 }
 input,
 textarea {
@@ -57,6 +60,12 @@ textarea {
 .material-icons {
   font-size: 1.3em;
   line-height: 1em;
+  &:first-child:not(:last-child) {
+    margin-right: 0.5em;
+  }
+  &:last-child:not(:first-child) {
+    margin-left: 0.5em;
+  }
 }
 
 h1,

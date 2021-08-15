@@ -5,7 +5,8 @@
 /.pnp
 .pnp.js
 
-/fake-api
+./fake-api
+./src/video/
 
 # testing
 /coverage

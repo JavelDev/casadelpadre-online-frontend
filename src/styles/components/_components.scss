@@ -76,3 +76,18 @@
     display: none;
   }
 }
+.loader::before {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 38px;
+  border: 8px solid rgba($primary-color, 0.3);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spinner 0.8s linear infinite;
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

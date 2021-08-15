@@ -5,7 +5,7 @@ const DATE_UNITS = [
   ["second", 1],
 ]
 
-let Last_time = 0
+let LAST_TIME = 0
 
 export const getDateDiffs = (timestamp, previous) => {
   const elapsed = (timestamp - previous) / 1000
@@ -18,9 +18,9 @@ export const getDateDiffs = (timestamp, previous) => {
 }
 
 export const verifyDiff = (timestamp) => {
-  const { value, unit } = getDateDiffs(timestamp, Last_time)
+  const { value, unit } = getDateDiffs(timestamp, LAST_TIME)
   if (unit === "second" || (unit === "minute" && value <= 2)) return false
-  Last_time = timestamp
+  LAST_TIME = timestamp
   return true
 }
 

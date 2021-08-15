@@ -1,12 +1,14 @@
 import { useState } from "react"
+import { useSelector } from "react-redux"
 import ReactPlayer from "react-player/file"
 import Icon from "../Molecules/Icon"
 import Loader from "../Molecules/Loader"
 const Player = () => {
+  const url = useSelector(({ videoQuality }) => videoQuality.url)
   const [loading, setLoading] = useState(true)
   const [muted, setMuted] = useState(true)
-  const [url, setUrl] = useState("http://192.168.1.135:8080/video/video.m3u8")
   const [playing, setPlaying] = useState(true)
+
   const onBuffer = () => {
     setLoading(true)
   }
@@ -18,7 +20,6 @@ const Player = () => {
   }
   const onEnded = () => {
     console.log("El video terminó")
-    setUrl("http://192.168.1.135:8080/video/completo.mp4")
   }
   return (
     <div className="player-container">
@@ -30,7 +31,8 @@ const Player = () => {
         onBuffer={onBuffer}
         onBufferEnd={onBufferEnd}
         onEnded={onEnded}
-        width="100%"
+        width="unset"
+        height="unset"
         playsinline
       />
       <div className="player-controls">

@@ -3,9 +3,9 @@ import { getTimeAgo } from "../../hooks/useTimeAgo"
 const Message = ({
   username,
   message,
-  sended_at,
+  sendedAt,
   userID: id,
-  show_timestamp,
+  showTimestamp,
   identify,
 }) => {
   if (identify)
@@ -14,8 +14,8 @@ const Message = ({
     )
   return (
     <>
-      {show_timestamp && (
-        <time className="chat-hour">{getTimeAgo(sended_at)}</time>
+      {showTimestamp && (
+        <time className="chat-hour">{getTimeAgo(sendedAt)}</time>
       )}
       <div className={`chat-message ${id === userID ? "own" : ""}`}>
         <span className="chat-message__username">{username}</span>

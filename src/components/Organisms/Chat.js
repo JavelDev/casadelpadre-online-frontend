@@ -39,9 +39,9 @@ const Chat = () => {
     Socket.send("chat-message", {
       username,
       message: writer.current.message.value,
-      sended_at: Date.now(),
+      sendedAt: Date.now(),
       userID,
-      show_timestamp: verifyDiff(Date.now()),
+      showTimestamp: verifyDiff(Date.now()),
     })
     writer.current.reset()
   }
@@ -74,7 +74,7 @@ const Chat = () => {
     Socket.send("chat-message", {
       username,
       message: `${username} está viendo.`,
-      sended_at: Date.now(),
+      sendedAt: Date.now(),
       userID,
       identify: true,
     })

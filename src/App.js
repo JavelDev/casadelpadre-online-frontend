@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import store from "./redux/store"
 import { Provider } from "react-redux"
 import { loadStreams } from "./redux/actionCreators"
+import Loader from "./components/Molecules/Loader"
+import Socket from "./services/socket"
 
 function App() {
   const [online, setOnline] = useState(undefined)
@@ -18,15 +20,30 @@ function App() {
       })
       .catch((err) => console.error(err))
   }, [])
+  Socket.on("stream-started", () => setOnline(true))
+  Socket.on("stream-ended", () => setOnline(false))
 
   return online ? (
     <Provider store={store}>
-      <Player />
-      <LiveInfo />
-      <Chat />
+      <div className="app-container">
+        <Player />
+        <LiveInfo />
+        <Chat />
+      </div>
     </Provider>
   ) : (
-    <h1>No estamos online</h1>
+    <div className="offline-page">
+      <div>
+        <h1>No estamos en vivo</h1>
+        <h2>
+          ¿Hoy toca servicio? Espera aquí hasta que la transmisión comience
+        </h2>
+      </div>
+      <div className="offline-page__loading">
+        <Loader />
+        <p>Esperando señal</p>
+      </div>
+    </div>
   )
 }
 

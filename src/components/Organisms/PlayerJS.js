@@ -1,45 +1,42 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
-import ReactPlayer from "react-player/file"
+import HLS from "hls.js"
 import Icon from "../Molecules/Icon"
 import Loader from "../Molecules/Loader"
+
 const Player = () => {
   const { url } = useSelector(({ videoQuality }) => videoQuality)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [muted, setMuted] = useState(true)
   const [playing, setPlaying] = useState(true)
+  const player = useRef()
 
-  // Cargando
-  const onBuffer = () => {
-    setLoading(true)
-  }
-  // Terminó de cargar
-  const onBufferEnd = () => {
-    setLoading(false)
-  }
+  useEffect(() => {
+    console.log(player.current.canPlayType("application/vnd.apple.mpegurl"))
+    if (player.current.canPlayType("application/vnd.apple.mpegurl")) {
+      player.current.src = url
+    }
+    if (!HLS.isSupported()) return console.error("Unsupported")
+    const hls = new HLS()
+    hls.loadSource(url)
+    hls.attachMedia(player.current)
+    hls.on(HLS.Events.FRAG_LOADING, () => setLoading(true))
+    hls.on(HLS.Events.FRAG_LOADED, () => setLoading(false))
+    player.current.addEventListener("waiting", (e) => {
+      console.log("Empezo a hace buffer", e)
+    })
+    player.current.addEventListener("bufferend", () => {
+      console.log("Termino el buffer")
+    })
+  }, [])
 
   // Play / Pause
   const togglePlay = () => {
     setPlaying(!playing)
   }
-  // Finalizó
-  const onEnded = () => {
-    console.log("El video terminó")
-  }
   return (
     <div className="player-container">
-      <ReactPlayer
-        url={url}
-        muted={muted}
-        autoPlay={true}
-        playing={playing}
-        onBuffer={onBuffer}
-        onBufferEnd={onBufferEnd}
-        onEnded={onEnded}
-        width="unset"
-        height="unset"
-        playsinline
-      />
+      <video src={url} playsInline ref={player} muted={muted} autoPlay />
       <div className="player-controls">
         {loading && <Loader />}
         {!loading && (

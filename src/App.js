@@ -1,11 +1,11 @@
 import "./styles/main.scss"
 import Chat from "./components/Organisms/Chat"
 import LiveInfo from "./components/Organisms/LiveInfo"
-import Player from "./components/Organisms/Player"
+import Player from "./components/Organisms/PlayerJS"
 import { useEffect, useState } from "react"
 import store from "./redux/store"
 import { Provider } from "react-redux"
-import { loadStreams } from "./redux/actionCreators"
+import { setUrl } from "./redux/actionCreators"
 import Loader from "./components/Molecules/Loader"
 import Socket from "./services/socket"
 
@@ -15,8 +15,8 @@ function App() {
     fetch(`${process.env.REACT_APP_API}/online`)
       .then((res) => res.json())
       .then((res) => {
-        store.dispatch(loadStreams(res.streams))
-        if (res.online) setOnline(true)
+        store.dispatch(setUrl(res.stream_url))
+        setOnline(true)
       })
       .catch((err) => console.error(err))
   }, [])

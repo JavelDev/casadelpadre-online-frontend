@@ -1,23 +1,29 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import ReactPlayer from "react-player/file"
 import Icon from "../Molecules/Icon"
 import Loader from "../Molecules/Loader"
 const Player = () => {
-  const url = useSelector(({ videoQuality }) => videoQuality.url)
+  const { url } = useSelector(({ videoQuality }) => videoQuality)
+  const ref = useRef()
   const [loading, setLoading] = useState(true)
   const [muted, setMuted] = useState(true)
   const [playing, setPlaying] = useState(true)
 
+  // Cargando
   const onBuffer = () => {
     setLoading(true)
   }
+  // Terminó de cargar
   const onBufferEnd = () => {
     setLoading(false)
   }
+
+  // Play / Pause
   const togglePlay = () => {
     setPlaying(!playing)
   }
+  // Finalizó
   const onEnded = () => {
     console.log("El video terminó")
   }
@@ -34,6 +40,7 @@ const Player = () => {
         width="unset"
         height="unset"
         playsinline
+        ref={ref}
       />
       <div className="player-controls">
         {loading && <Loader />}

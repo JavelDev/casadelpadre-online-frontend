@@ -16,7 +16,7 @@ function App() {
       .then((res) => res.json())
       .then((res) => {
         store.dispatch(loadStreams(res.streams))
-        setOnline(true)
+        if (res.online) setOnline(true)
       })
       .catch((err) => console.error(err))
   }, [])

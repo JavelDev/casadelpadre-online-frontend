@@ -24,7 +24,7 @@ button {
   align-items: center;
   padding: $padding;
   border: 0;
-  border-radius: $radius / 2;
+  border-radius: ($radius / 2);
   background: var(--primary-color);
   color: var(--content-color);
   font-size: var(--fs-metadata);

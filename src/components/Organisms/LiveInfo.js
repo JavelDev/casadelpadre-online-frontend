@@ -23,12 +23,6 @@ const LiveInfo = () => {
         <span className="live-banner__counter">{total}</span>
       </div>
       <div className="quality-selector">
-        <button
-          className={quality === -1 ? "active" : ""}
-          onClick={() => select(-1)}
-        >
-          Auto
-        </button>
         {qualities.map((q, i) => {
           return (
             <button

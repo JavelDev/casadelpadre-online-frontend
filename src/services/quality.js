@@ -2,10 +2,10 @@ import store from "../redux/store"
 import { setQuality } from "../redux/actionCreators"
 
 export function getQuality() {
-  if (!("connection" in navigator)) return "480p"
-  if (navigator.connection.downlink < 5) return "480p"
-  if (navigator.connection.downlink < 2.5) return "240p"
-  return "720p"
+  if (!("connection" in navigator)) return 1
+  if (navigator.connection.downlink < 5) return 1
+  if (navigator.connection.downlink < 2.5) return 2
+  return 0
 }
 
 // Autocalcular

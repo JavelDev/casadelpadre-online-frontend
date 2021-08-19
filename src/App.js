@@ -5,18 +5,18 @@ import Player from "./components/Organisms/PlayerJS"
 import { useEffect, useState } from "react"
 import store from "./redux/store"
 import { Provider } from "react-redux"
-import { setUrl } from "./redux/actionCreators"
 import Loader from "./components/Molecules/Loader"
 import Socket from "./services/socket"
 
 function App() {
   const [online, setOnline] = useState(undefined)
+  const [url, setUrl] = useState("")
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API}/online`)
       .then((res) => res.json())
       .then((res) => {
-        store.dispatch(setUrl(res.stream_url))
-        setOnline(true)
+        setUrl(res.stream_url)
+        if (res.online) setOnline(true)
       })
       .catch((err) => console.error(err))
   }, [])
@@ -26,7 +26,7 @@ function App() {
   return online ? (
     <Provider store={store}>
       <div className="app-container">
-        <Player />
+        <Player url={url} />
         <LiveInfo />
         <Chat />
       </div>

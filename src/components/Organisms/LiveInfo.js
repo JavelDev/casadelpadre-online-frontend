@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setQuality } from "../../redux/actionCreators"
+// import { setQuality } from "../../redux/actionCreators"
 import Socket from "../../services/socket"
 const useViewers = () => {
   const [total, setTotal] = useState(0)
@@ -10,9 +11,9 @@ const useViewers = () => {
 
 const LiveInfo = () => {
   const total = useViewers()
-  const quality = useSelector(({ videoQuality }) => videoQuality.quality)
+  const { qualities, quality } = useSelector(({ videoQuality }) => videoQuality)
   const dispatch = useDispatch()
-  const selectQuality = (quality) => {
+  const select = (quality) => {
     dispatch(setQuality(quality))
   }
   return (
@@ -23,23 +24,22 @@ const LiveInfo = () => {
       </div>
       <div className="quality-selector">
         <button
-          className={quality === "240p" ? "active" : ""}
-          onClick={() => selectQuality("240p")}
+          className={quality === -1 ? "active" : ""}
+          onClick={() => select(-1)}
         >
-          240p
+          Auto
         </button>
-        <button
-          className={quality === "480p" ? "active" : ""}
-          onClick={() => selectQuality("480p")}
-        >
-          480p
-        </button>
-        <button
-          className={quality === "720p" ? "active" : ""}
-          onClick={() => selectQuality("720p")}
-        >
-          720p
-        </button>
+        {qualities.map((q, i) => {
+          return (
+            <button
+              key={i}
+              className={i === quality ? "active" : ""}
+              onClick={() => select(i)}
+            >
+              {q.height}p
+            </button>
+          )
+        })}
       </div>
     </div>
   )

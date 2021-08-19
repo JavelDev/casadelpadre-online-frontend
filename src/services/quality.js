@@ -10,6 +10,7 @@ export function getQuality() {
 
 // Autocalcular
 const autoCalc = () => {
+  console.log("Calculando Velocidad")
   if (!("connection" in navigator)) return false
   navigator.connection.addEventListener("change", () => {
     const quality = getQuality()

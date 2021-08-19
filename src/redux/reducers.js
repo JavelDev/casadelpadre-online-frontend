@@ -1,15 +1,11 @@
-import { getQuality } from "../services/quality"
-
-const DEFAULT_SETTINGS = { streams: {}, quality: getQuality() }
-export const videoQuality = (state = DEFAULT_SETTINGS, { type, data }) => {
-  if (type === "set-url") {
-    return { ...state, url: data }
-  }
-  if (type === "set-streams") {
-    return { ...state, streams: data, url: data[state.quality] }
+const DEFAULT_STATE = { qualities: [], quality: -1 }
+export const videoQuality = (state = DEFAULT_STATE, { type, data }) => {
+  if (type === "set-qualities") {
+    return { ...state, qualities: data, quality: state.quality || -1 }
   }
   if (type === "set-quality") {
-    return { ...state, quality: data, url: state.streams[data] }
+    return { ...state, quality: data }
   }
+
   return state
 }

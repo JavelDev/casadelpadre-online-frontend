@@ -9,34 +9,48 @@ const Player = () => {
   const [loading, setLoading] = useState(false)
   const [muted, setMuted] = useState(true)
   const [playing, setPlaying] = useState(true)
-  const player = useRef()
+  const playerRef = useRef()
 
   useEffect(() => {
-    console.log(player.current.canPlayType("application/vnd.apple.mpegurl"))
-    if (player.current.canPlayType("application/vnd.apple.mpegurl")) {
-      player.current.src = url
+    const player = playerRef.current
+    if (player.canPlayType("application/vnd.apple.mpegurl")) {
+      player.src = url
     }
     if (!HLS.isSupported()) return console.error("Unsupported")
+
+    player.addEventListener("contextmenu", (e) => {
+      e.preventDefault()
+    })
+
     const hls = new HLS()
     hls.loadSource(url)
-    hls.attachMedia(player.current)
-    hls.on(HLS.Events.FRAG_LOADING, () => setLoading(true))
-    hls.on(HLS.Events.FRAG_LOADED, () => setLoading(false))
-    player.current.addEventListener("waiting", (e) => {
-      console.log("Empezo a hace buffer", e)
+    hls.attachMedia(player)
+
+    hls.on(HLS.Events.FRAG_LOADING, () => {
+      if (player.paused) setLoading(true)
     })
-    player.current.addEventListener("bufferend", () => {
-      console.log("Termino el buffer")
+    hls.on(HLS.Events.FRAG_LOADED, () => (loading ? setLoading(false) : false))
+
+    hls.on(HLS.Events.MANIFEST_LOADED, () => {
+      player.play()
+
+      console.log(hls.levels, hls.currentLevel, hls.bandwidthEstimate)
+      setTimeout(() => {
+        console.log("Cambiando calidad")
+        hls.currentLevel = 0
+      }, 5000)
     })
   }, [])
 
   // Play / Pause
   const togglePlay = () => {
+    if (playing) playerRef.current.pause()
+    else playerRef.current.play()
     setPlaying(!playing)
   }
   return (
     <div className="player-container">
-      <video src={url} playsInline ref={player} muted={muted} autoPlay />
+      <video src={url} playsInline ref={playerRef} muted={muted} />
       <div className="player-controls">
         {loading && <Loader />}
         {!loading && (

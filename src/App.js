@@ -1,10 +1,7 @@
 import "./styles/main.scss"
-import Chat from "./components/Organisms/Chat"
-import LiveInfo from "./components/Organisms/LiveInfo"
-import Player from "./components/Organisms/PlayerJS"
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import HomePage from "./components/Pages/HomePage"
 import { useEffect, useState } from "react"
-import store from "./redux/store"
-import { Provider } from "react-redux"
 import Loader from "./components/Molecules/Loader"
 import Socket from "./services/socket"
 
@@ -24,13 +21,11 @@ function App() {
   Socket.on("stream-ended", () => setOnline(false))
 
   return online ? (
-    <Provider store={store}>
-      <div className="app-container">
-        <Player url={url} />
-        <LiveInfo />
-        <Chat />
-      </div>
-    </Provider>
+    <Router>
+      <Route path="/">
+        <HomePage url={url} />
+      </Route>
+    </Router>
   ) : (
     <div className="offline-page">
       <div>

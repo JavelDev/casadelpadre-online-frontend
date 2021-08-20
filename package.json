@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "hls.js": "^1.0.9",
+    "npm": "^7.21.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-player": "^2.9.0",
-    "react-redux": "^7.2.4",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "redux": "^4.1.1",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0",
     "sass": "^1.37.5",
-    "sass-node": "^4.11.2"
+    "sass-node": "^4.11.2",
+    "video.js": "^7.14.3",
+    "videojs-contrib-hls": "^5.15.0",
+    "videojs-http-source-selector-mute": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -3,7 +3,8 @@ import { useState } from "react"
 export const useBuffering = () => {
   const [loading, setLoading] = useState()
   const [player, setPlayer] = useState()
-  const checkInterval = 500.0 // check every 50 ms (do not use lower values)
+  const checkInterval = 900 // check every 50 ms (do not use lower values)
+  const margin = 300 // Margen de tolerancia
   let lastPlayPos = 0
   let currentPlayPos = 0
   let bufferingDetected = false
@@ -16,7 +17,7 @@ export const useBuffering = () => {
 
     // checking offset should be at most the check interval
     // but allow for some margin
-    const offset = (checkInterval - 20) / 1000
+    const offset = (checkInterval - margin) / 1000
 
     // if no buffering is currently detected,
     // and the position does not seem to increase
@@ -26,7 +27,6 @@ export const useBuffering = () => {
       currentPlayPos < lastPlayPos + offset &&
       !player.paused
     ) {
-      console.log("buffering")
       bufferingDetected = true
       setLoading(true)
     }
@@ -38,7 +38,6 @@ export const useBuffering = () => {
       currentPlayPos > lastPlayPos + offset &&
       !player.paused
     ) {
-      console.log("not buffering anymore")
       bufferingDetected = false
       setLoading(false)
     }

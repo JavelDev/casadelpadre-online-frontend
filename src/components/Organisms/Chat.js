@@ -7,10 +7,10 @@ import { getDateDiffs, verifyDiff } from "../../hooks/useTimeAgo"
 
 const ENTER_KEY = 13
 
-const Chat = () => {
+const Chat = ({ chatOnly }) => {
   const [messages, setMessages] = useState([])
   const [username, setUsername] = useState(localStorage.getItem("username"))
-  const [editor, setEditor] = useState(!username)
+  const [editor, setEditor] = useState(!username && !chatOnly)
   const [error, setError] = useState("")
   const writer = useRef()
   const container = useRef()
@@ -66,7 +66,7 @@ const Chat = () => {
       Date.now(),
       localStorage.getItem("identified")
     )
-    if (["second", "minute", "hour"].includes(unit)) return false
+    if (["second", "minute"].includes(unit)) return false
     return true
   }
   const identify = () => {
@@ -112,7 +112,7 @@ const Chat = () => {
         defaultValue={username}
         autoFocus
       />
-      <button>
+      <button className="button">
         <Icon>person</Icon>
         <span>Identificarme</span>
       </button>
@@ -124,19 +124,21 @@ const Chat = () => {
           <Message key={i} {...m} />
         ))}
       </div>
-      <form className="chat-writer" onSubmit={onSubmit} ref={writer}>
-        <textarea
-          className="chat-writer-input"
-          id="message"
-          onKeyUp={handleKeyup}
-        ></textarea>
-        <button className="only-icon basic" onClick={handleSettings}>
-          <Icon>settings</Icon>
-        </button>
-        <button className="only-icon send">
-          <Icon>send</Icon>
-        </button>
-      </form>
+      {!chatOnly && (
+        <form className="chat-writer" onSubmit={onSubmit} ref={writer}>
+          <textarea
+            className="chat-writer-input"
+            id="message"
+            onKeyUp={handleKeyup}
+          ></textarea>
+          <button className="button only-icon basic" onClick={handleSettings}>
+            <Icon>settings</Icon>
+          </button>
+          <button className="button only-icon send">
+            <Icon>send</Icon>
+          </button>
+        </form>
+      )}
     </div>
   )
 }

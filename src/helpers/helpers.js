@@ -1,3 +1,23 @@
+export const MyStorage = new (class {
+  getItem(name) {
+    if (!("localStorage" in window)) return false
+    try {
+      return localStorage.getItem(name)
+    } catch (err) {
+      return false
+    }
+  }
+
+  setItem(name, content) {
+    if (!("localStorage" in window)) return false
+    try {
+      return localStorage.setItem(name, content)
+    } catch (err) {
+      return false
+    }
+  }
+})()
+
 const makeID = (length) => {
   let result = ""
   const characters =
@@ -6,7 +26,7 @@ const makeID = (length) => {
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength))
   }
-  localStorage.setItem("userID", result)
+  MyStorage.setItem("user_id", result)
   return result
 }
-export const userID = localStorage.getItem("userID") || makeID(11)
+export const userID = MyStorage.getItem("user_id") || makeID(11)

@@ -17,20 +17,42 @@
   z-index: var(--zi-modal);
   .video-js {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     left: 0;
     width: 100%;
     height: 100%;
     z-index: var(--zi-bg);
   }
+  .unmute {
+    position: absolute;
+    top: $padding;
+    left: $padding;
+    border-radius: $radius;
+    display: flex;
+    padding: $padding;
+    animation: alert 0.5s infinite;
+    color: #fff;
+    cursor: pointer;
+    @keyframes alert {
+      from {
+        background: green;
+      }
+      to {
+        background: red;
+      }
+    }
+  }
   @media (min-width: 500px) and (orientation: landscape) {
+    .video-js {
+      top: 50%;
+      transform: translateY(-50%);
+    }
     grid-row: span 2;
+    border-radius: 0 $radius $radius 0;
   }
 }
 .live-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: $padding;
   position: sticky;

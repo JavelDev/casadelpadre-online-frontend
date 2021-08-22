@@ -1,4 +1,4 @@
-import Chat from "../Organisms/Chat"
+import Chat from "../Organisms/Chat/Chat"
 import LiveInfo from "../Organisms/LiveInfo"
 import Player from "../Organisms/PlayerJS"
 const HomePage = ({ url }) => {

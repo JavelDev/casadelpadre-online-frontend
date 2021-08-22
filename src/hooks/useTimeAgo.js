@@ -25,7 +25,13 @@ export const verifyDiff = (timestamp) => {
 }
 
 export const getTimeAgo = (timestamp) => {
-  const { value, unit } = getDateDiffs(timestamp, Date.now())
-  const rtf = new Intl.RelativeTimeFormat("es", { style: "short" })
-  return rtf.format(value, unit)
+  if (Intl.RelativeTimeFormat) {
+    const { value, unit } = getDateDiffs(timestamp, Date.now())
+    const rtf = new Intl.RelativeTimeFormat("es", { style: "short" })
+    return rtf.format(value, unit)
+  }
+  const date = new Date(timestamp)
+  return `A las ${("0" + date.getHours()).slice(-2)}:${(
+    "0" + date.getMinutes()
+  ).slice(-2)}`
 }

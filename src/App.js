@@ -1,8 +1,7 @@
 import "./styles/main.scss"
-import { BrowserRouter as Router, Route } from "react-router-dom"
-import HomePage from "./components/Pages/HomePage"
 import { useEffect, useState } from "react"
-import Loader from "./components/Molecules/Loader"
+import HomePage from "./components/Pages/HomePage"
+import OfflinePage from "./components/Pages/OfflinePage"
 import Socket from "./services/socket"
 
 function App() {
@@ -17,29 +16,9 @@ function App() {
       })
       .catch((err) => console.error(err))
   }, [])
-  Socket.on("stream-started", () => setOnline(true))
-  Socket.on("stream-ended", () => setOnline(false))
-
-  return online ? (
-    <Router>
-      <Route path="/">
-        <HomePage url={url} />
-      </Route>
-    </Router>
-  ) : (
-    <div className="offline-page">
-      <div>
-        <h1>No estamos en vivo</h1>
-        <h2>
-          ¿Hoy toca servicio? Espera aquí hasta que la transmisión comience
-        </h2>
-      </div>
-      <div className="offline-page__loading">
-        <Loader />
-        <p>Esperando señal</p>
-      </div>
-    </div>
-  )
+  Socket.on("stream-started", () => (!online ? setOnline(true) : false))
+  Socket.on("stream-ended", () => (online ? setOnline(false) : false))
+  return online ? <HomePage url={url} /> : <OfflinePage />
 }
 
 export default App

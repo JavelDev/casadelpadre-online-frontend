@@ -13,7 +13,7 @@
     "sass-node": "^4.11.2",
     "video.js": "^7.14.3",
     "videojs-contrib-hls": "^5.15.0",
-    "videojs-http-source-selector-mute": "^1.0.2"
+    "videojs-hls-quality-selector": "^1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

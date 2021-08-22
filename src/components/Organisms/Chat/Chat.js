@@ -3,8 +3,8 @@ import { MyStorage, userID } from "../../../helpers/helpers"
 import { getDateDiffs, verifyDiff } from "../../../hooks/useTimeAgo"
 import Socket from "../../../services/socket"
 import Icon from "../../Molecules/Icon"
-import Message from "../Message"
 import IdentifyForm from "./IdentifyForm"
+import Messages from "./Messages"
 const ENTER_KEY = 13
 
 const Chat = () => {
@@ -55,26 +55,6 @@ const Chat = () => {
 
   // * Referencias
   const form = useRef()
-  const container = useRef()
-
-  // * Manejar mensajes
-  const [messages, setMessages] = useState([])
-  useEffect(() => {
-    fetch(process.env.REACT_APP_API)
-      .then((r) => r.json())
-      .then(({ chat }) => setMessages(chat.filter((msg) => !msg.identify)))
-      .catch((err) => {
-        console.error(err)
-        alert(err)
-      })
-  }, [])
-  useEffect(() => {
-    if (!container.current) return false
-    container.current.scrollTop = container.current.scrollHeight
-  }, [messages])
-  Socket.on("chat-message", (msg) => {
-    setMessages([...messages, msg])
-  })
 
   // * Enviar mensaje
   const sendMessage = () => {
@@ -99,11 +79,7 @@ const Chat = () => {
 
   return !editor ? (
     <div className="chat-container">
-      <div className="chat-messages-container" ref={container}>
-        {messages.map((m, i) => (
-          <Message key={i} {...m} />
-        ))}
-      </div>
+      <Messages />
       <form className="chat-writer" onSubmit={handleSendMessage} ref={form}>
         <textarea
           className="chat-writer-input"

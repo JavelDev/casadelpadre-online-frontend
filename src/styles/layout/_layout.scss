@@ -67,6 +67,7 @@
     overflow: hidden;
     grid-template-rows: 1fr auto;
     padding: $padding;
+    scroll-behavior: smooth;
     @media (min-width: 500px) and (orientation: landscape) {
       max-height: calc(100vh - var(--live-h));
     }
@@ -126,7 +127,7 @@
       line-height: 1.5em;
     }
     &__content {
-      line-height: 1.2em;
+      line-height: 1.3em;
     }
     &.own {
       margin-left: auto;
@@ -160,6 +161,80 @@
     p {
       font-size: var(--fs-subtitle);
       padding: ($padding * 2);
+    }
+  }
+}
+
+// Chat para OBS
+.chat-obs {
+  --username-color: #a24c92;
+  --username-size: 30px;
+  --content-size: 45px;
+  --content-border-color: #2fc9c5;
+  --mask: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 70%,
+    transparent 98%
+  );
+  width: 100vw;
+  height: 100vh;
+  -webkit-mask-image: var(--mask);
+  mask-image: var(--mask);
+  .chat {
+    &-messages-container {
+      height: 100%;
+      max-height: 100vh;
+      padding-bottom: 2em;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    &-assistand,
+    &-hour {
+      display: none;
+    }
+    &-message {
+      background: none;
+      text-align: left;
+      margin: 0;
+      &:first-of-type {
+        margin: 1em 0 0 0;
+      }
+      &__username {
+        display: flex;
+        padding: 0.6em 1em;
+        background: var(--username-color);
+        border-radius: $radius;
+        font-size: var(--username-size);
+        width: fit-content;
+        position: relative;
+        text-transform: uppercase;
+        font-weight: bold;
+        z-index: 1;
+        left: 0.8em;
+        top: 1.3em;
+        &::before {
+          content: "\e853";
+          font-family: var(--ff-icons);
+          font-size: 1.5em;
+          display: block;
+          margin-right: 0.2em;
+        }
+      }
+      &__content {
+        position: static;
+        display: block;
+        padding: 1.3em 1em 0.5em 1em;
+        font-size: var(--content-size);
+        background: rgba(9, 19, 20, 0.75);
+        border: 2px solid var(--content-border-color);
+        border-radius: 0 $radius $radius $radius;
+        box-shadow: 0 0 20px rgba(#000, 0.3);
+        z-index: 0;
+        width: fit-content;
+        min-width: 50vw;
+      }
     }
   }
 }

@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Plataforma de live streaming (Servicios online, Iglesia Casa del Padre)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esta pequeña app react es el cliente de la plataforma de streaming desarrollada exclusivamente para transmitir los servicios online de la Iglesia Casa del Padre. Tocopilla, Chile.
 
-## Available Scripts
+## App en Producción:
+Actualmente la plataforma está en producción en [https://iglesiacasadelpadre.cl](https://iglesiacasadelpadre.cl). Se realizan servicios todos los Jueves a las 20:00 hrs. (hora de Chile).
 
-In the project directory, you can run:
+## Contexto
 
-### `yarn start`
+A causa del Covid, la iglesia Casa del Padre (como todas) se vio obligada a realizar sus reuniones a través de internet. Por asuntos de copyright y problemas de funcionamiento en Android, Youtube y Facebook dejaron de ser una opción y se optó por implementar un sistema propio para realizar nuestras transmisiones en vivo.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Infraestructura y Backend:
+Toda la infraestructura, servidor RTMP y backend estan mantenidos y documentados en su propio [Repositorio de Github](https://github.com/pepelias/casadelpadre-online)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Características de la App:
 
-### `yarn test`
+Se requería una app lo más sencilla posible, de forma que la congregación, al tan solo presionar un link en whatsapp, pueda comenzar a ver el servicio. Tomando eso en cuenta, esta son las características principales:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Vista offline:** Visible mientras no hay una transmisón activa
+2. **Vista online:** Muestra el player de video, total de viewers y chat en vivo
+3. **Detección de inicio y final:** Sin recargar la página, se detecta el comienzo y final del stream y se cambia de vista.
+4. **Chat en vivo:** Es la principal forma de interacción.
+   1. **No se requiere registro:** Solo se pide el nombre para interactuar con el chat (Es modificable).
+   2. **Información persistente:** La app recuerda tu nombre y no vuelve a pedirlo en las siguientes transmisiones.
+   3. **Mensaje de ingreso:** *"José Avello está viendo"*
+5. **Chat para OBS:** Vista preparada para ser incluida como widget en el software de transmisión, Muestra solamente los mensajes del chat con un diseño personalidazo acorde al stream.
+6. **Player HLS:** Se implementa `video.js` ya que tiene una alta compatibilidad. Se le añadieron plugins para manejar multiples calidades.
+7. **Multiples Calidades:** Manejamos calidades `720p`, `480p` y `240p`; aunque en teoría se calcula automaticamente, se incluye un selector para cambiar la calidad manualmente.
 
-### `yarn build`
+![Demostración del proyecto](demo_readme.gif)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> La escena final muestra el chat ya integrado como widget en el software de transmisión.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Widget para OBS
+Para integrar el chat como un widget en Obs, solo necesita añadir una **fuente de navegador** con la ruta `https://iglesiacasadelpadre.cl/chat` (No se aplica ningún tipo de seguridad)

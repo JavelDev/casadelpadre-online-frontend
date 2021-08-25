@@ -24,7 +24,7 @@ const IdentifyForm = ({ onIdentified, defaultValue }) => {
       />
       <button className="button">
         <Icon>person</Icon>
-        <span>Identificarme</span>
+        <span>Entrar</span>
       </button>
     </form>
   )

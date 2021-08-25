@@ -20,8 +20,11 @@ export const getDateDiffs = (timestamp, previous) => {
 export const verifyDiff = (timestamp) => {
   const { value, unit } = getDateDiffs(timestamp, LAST_TIME)
   if (unit === "second" || (unit === "minute" && value <= 2)) return false
-  LAST_TIME = timestamp
   return true
+}
+
+export const updateDiff = (timestamp) => {
+  LAST_TIME = timestamp
 }
 
 export const getTimeAgo = (timestamp) => {

@@ -1,5 +1,5 @@
 import { userID } from "../../helpers/helpers"
-import { getTimeAgo } from "../../hooks/useTimeAgo"
+import { getTimeAgo, updateDiff } from "../../helpers/timeAgo"
 
 const Message = ({
   username,
@@ -11,6 +11,7 @@ const Message = ({
 }) => {
   if (identify && sendedBy !== userID)
     return <p className="chat-assistand">{message}</p>
+  if (showTimestamp) updateDiff(sendedAt)
   return (
     !identify && (
       <>

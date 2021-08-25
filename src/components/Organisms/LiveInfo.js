@@ -1,13 +1,7 @@
-import { useState } from "react"
-import Socket from "../../services/socket"
-const useViewers = () => {
-  const [total, setTotal] = useState(0)
-  Socket.on("viewers-refresh", ({ viewers }) => setTotal(viewers))
-  return total
-}
+import useTotalViewers from "../../hooks/useTotalViewers"
 
 const LiveInfo = () => {
-  const total = useViewers()
+  const total = useTotalViewers()
   return (
     <div className="live-info">
       <div className="live-banner">

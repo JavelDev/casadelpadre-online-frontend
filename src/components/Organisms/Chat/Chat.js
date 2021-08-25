@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react"
-import { MyStorage, userID } from "../../../helpers/helpers"
-import { getDateDiffs, verifyDiff } from "../../../hooks/useTimeAgo"
+import { useState, useRef } from "react"
+import { userID } from "../../../helpers/helpers"
+import { verifyDiff } from "../../../helpers/timeAgo"
+import useSessionData from "../../../hooks/useSessionData"
 import Socket from "../../../services/socket"
 import Icon from "../../Molecules/Icon"
 import IdentifyForm from "./IdentifyForm"
@@ -8,50 +9,20 @@ import Messages from "./Messages"
 const ENTER_KEY = 13
 
 const Chat = () => {
-  // * Manejar Session
-  const [session, setSession] = useState(
-    JSON.parse(MyStorage.getItem("userData") || "{}")
-  )
-  const [identified, setIdentified] = useState(session.identified)
-  const [editor, setEditor] = useState(session.name === undefined)
+  const { session, setUsername } = useSessionData()
+  const [editor, setEditor] = useState(true)
+
+  // Mostrar editor de nombre
   const showEditor = (e) => {
     e.preventDefault()
     setEditor(true)
   }
 
-  // Enviar identificacion
-  const calcIdentify = () => {
-    if (!identified) return true
-    const { unit } = getDateDiffs(Date.now(), session.identified)
-    if (["second", "minute"].includes(unit)) return false
-    return true
-  }
-  const identify = () => {
-    if (!calcIdentify()) return false
-    Socket.send("chat-message", {
-      message: `${session.name} esta viendo`,
-      username: session.name,
-      sendedAt: Date.now(),
-      sendedBy: userID,
-      identify: true,
-    })
-    MyStorage.setItem(
-      "userData",
-      JSON.stringify({ ...session, identified: Date.now() })
-    )
-    setIdentified(true)
-  }
   // Setear nombre
   const onIdentified = (name) => {
-    setSession({ ...session, name })
-  }
-
-  useEffect(() => {
-    if (!session || !session.name) return false
-    MyStorage.setItem("userData", JSON.stringify(session))
     setEditor(false)
-    identify()
-  }, [session])
+    setUsername(name)
+  }
 
   // * Referencias
   const form = useRef()
@@ -74,10 +45,18 @@ const Chat = () => {
     sendMessage()
   }
   const handleKeyup = (e) => {
-    if (e.which === ENTER_KEY && !e.ctrlKey) sendMessage()
+    if (e.which !== ENTER_KEY || e.ctrlKey) return false
+    e.preventDefault()
+    sendMessage()
   }
 
-  return !editor ? (
+  if (editor) {
+    return (
+      <IdentifyForm onIdentified={onIdentified} defaultValue={session.name} />
+    )
+  }
+
+  return (
     <div className="chat-container">
       <Messages />
       <form className="chat-writer" onSubmit={handleSendMessage} ref={form}>
@@ -94,8 +73,6 @@ const Chat = () => {
         </button>
       </form>
     </div>
-  ) : (
-    <IdentifyForm onIdentified={onIdentified} defaultValue={session.name} />
   )
 }
 export default Chat

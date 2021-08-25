@@ -120,6 +120,12 @@
     width: fit-content;
     border-radius: $radius;
     margin: $margin 0;
+    animation: fadeIn 0.5s;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+    }
     &__username {
       display: block;
       font-size: var(--fs-special);
